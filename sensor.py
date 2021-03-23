@@ -54,7 +54,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
         _LOGGER.exception("Could not run my First Extension")
         return False
     fbx = freepybox.freepybox()
-    _LOGGER.exception("host %s" %(host))
+    _LOGGER.info("host %s" %(host))
     fbx.open(host, 80)
     fbxlstPlayer = fbx.freeplayer.get_freeplayer_list()
     fbx.close()
@@ -161,29 +161,36 @@ class myFreeBoxPlayer(Entity):
         status_counts = defaultdict(int)
 
         fbx = freepybox.freepybox()
-        _LOGGER.exception("host  update%s" %(self._host))
-        fbx.open(self._host, 80)
-        myfbx_player_status_details = fbx.freeplayer.get_freeplayer(self._id)
-        fbx.close()
+        #_LOGGER.exception("host  update %s" %(self._host))
         status_counts["lastSynchro"] = datetime.datetime.now()
-        status_counts["power_stat"] = myfbx_player_status_details["power_state"]
         try:
-            quoiRegarde = myfbx_player_status_details["foreground_app"]["cur_url"]
-            parsed = urlparse.urlparse(quoiRegarde)
-            status_counts["out"] = parsed.scheme
-            if ( status_counts["out"] == "tv" ):
-                status_counts["channel"] = parse_qs(parsed.query)['channel'][0]
-                status_counts["package"] = myfbx_player_status_details["foreground_app"]["package"]
-                status_counts["package_id"] = myfbx_player_status_details["foreground_app"]["package_id"]
-            if ( status_counts["out"] == "home" ):
-                status_counts["highlight"] = parse_qs(parsed.query)['highlight'][0]
-                newUrl = parse_qs(parsed.query)['highlight'][0]
-                parsed = urlparse.urlparse(newUrl)
-                try:
-                    status_counts["bouquetName"] = parse_qs(parsed.query)["bouquetName"][0]
-                except:
-                    pass
+            fbx.open(self._host, 80)
+            myfbx_player_status_details = fbx.freeplayer.get_freeplayer(self._id)
+            fbx.close()
+            status_counts["power_stat"] = myfbx_player_status_details["power_state"]
+            quelPackage = myfbx_player_status_details["foreground_app"]["package"]
+            status_counts["package"] = quelPackage
+            status_counts["package_id"] = myfbx_player_status_details["foreground_app"]["package_id"]
+            if ( quelPackage == "fr.freebox.tv"):
+                quoiRegarde = myfbx_player_status_details["foreground_app"]["cur_url"]
+                parsed = urlparse.urlparse(quoiRegarde)
+                status_counts["out"] = parsed.scheme
+                if ( status_counts["out"] == "tv" ):
+                    status_counts["channel"] = parse_qs(parsed.query)['channel'][0]
+                if ( status_counts["out"] == "home" ):
+                    status_counts["highlight"] = parse_qs(parsed.query)['highlight'][0]
+                    newUrl = parse_qs(parsed.query)['highlight'][0]
+                    parsed = urlparse.urlparse(newUrl)
+                    try:
+                        status_counts["bouquetName"] = parse_qs(parsed.query)["bouquetName"][0]
+                    except:
+                        pass
+            elif (quelPackage == "fr.freebox.mediaplayer"):
+                status_counts["out"] = "mediaplayer"
+            else:
+                status_counts["out"] = "???"
         except:
+            myfbx_player_status_details = "eteinte"
             pass
         status_counts["info"] = "%s"%(myfbx_player_status_details)
 

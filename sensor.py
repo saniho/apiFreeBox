@@ -38,7 +38,18 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     }
 )
 
-from . import freepybox
+
+try:
+    from .const import (
+        __VERSION__
+    )
+    from . import freepybox
+
+except ImportError:
+    from const import (
+        __VERSION__
+    )
+    import freepybox
 
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
@@ -98,6 +109,7 @@ class myFreeBox(Entity):
         fbx_connection_status_details = fbx.connection.get_status_details()
         fbx_connection_xdsl_details = fbx.connection.get_xdsl_stats()
         fbx.close()
+        status_counts["version"] = __VERSION__
         status_counts["lastSynchro"] = datetime.datetime.now()
         status_counts['ipv4'] = fbx_connection_status_details['ipv4']
         status_counts['ipv6'] = fbx_connection_status_details['ipv6']
@@ -114,7 +126,7 @@ class myFreeBox(Entity):
         
         status_counts['state'] = fbx_connection_status_details['state']
 
-        self._attributes = {ATTR_ATTRIBUTION: ""}
+        self._attributes = {}
         self._attributes.update(status_counts)
         ## pour debloquer
         self._state = fbx_connection_status_details['state']
@@ -162,6 +174,7 @@ class myFreeBoxPlayer(Entity):
 
         fbx = freepybox.freepybox()
         #_LOGGER.exception("host  update %s" %(self._host))
+        status_counts["version"] = __VERSION__
         status_counts["lastSynchro"] = datetime.datetime.now()
         try:
             fbx.open(self._host, 80)
@@ -187,14 +200,16 @@ class myFreeBoxPlayer(Entity):
                         pass
             elif (quelPackage == "fr.freebox.mediaplayer"):
                 status_counts["out"] = "mediaplayer"
+            elif (quelPackage == "fr.freebox.vodlauncher"):
+                status_counts["out"] = "vodlaucher"
             else:
-                status_counts["out"] = "???"
+                status_counts["out"] = "%s ???"%(quelPackage)
         except:
             myfbx_player_status_details = "eteinte"
             pass
         status_counts["info"] = "%s"%(myfbx_player_status_details)
 
-        self._attributes = {ATTR_ATTRIBUTION: ""}
+        self._attributes = {}
         self._attributes.update(status_counts)
         ## pour debloquer
         self._state = myfbx_player_status_details["power_state"]

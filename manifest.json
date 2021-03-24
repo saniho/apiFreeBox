@@ -1,7 +1,9 @@
 {
-    "domain": "saniho",
-    "name": "saniho",
-    "documentation": "",
+    "domain": "myFreeboxPlayer",
+    "name": "myFreeboxPlayer sensor",
+    "documentation": "https://github.com/saniho/apiFreeBox/",
+    "config_flow": false,
+    "version": "v1.0.0.2",
     "requirements": [
     ],
     "dependencies": [],

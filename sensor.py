@@ -126,7 +126,7 @@ class myFreeBox(Entity):
         
         status_counts['state'] = fbx_connection_status_details['state']
 
-        self._attributes = {}
+        self._attributes = {ATTR_ATTRIBUTION: ""}
         self._attributes.update(status_counts)
         ## pour debloquer
         self._state = fbx_connection_status_details['state']
@@ -209,7 +209,7 @@ class myFreeBoxPlayer(Entity):
             pass
         status_counts["info"] = "%s"%(myfbx_player_status_details)
 
-        self._attributes = {}
+        self._attributes = {ATTR_ATTRIBUTION: ""}
         self._attributes.update(status_counts)
         ## pour debloquer
         self._state = myfbx_player_status_details["power_state"]

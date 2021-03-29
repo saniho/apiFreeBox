@@ -111,12 +111,12 @@ class myFreeBox(Entity):
         fbx.close()
         status_counts["version"] = __VERSION__
         status_counts["lastSynchro"] = datetime.datetime.now()
-        status_counts['ipv4'] = fbx_connection_status_details['ipv4']
-        status_counts['ipv6'] = fbx_connection_status_details['ipv6']
+        status_counts['ipv4'] = fbx_connection_status_details.get('ipv4',"")
+        status_counts['ipv6'] = fbx_connection_status_details.get('ipv6',"")
         # unite : Mb
-        status_counts['bandwidth_down'] = (fbx_connection_status_details['bandwidth_down']/1000000)
+        status_counts['bandwidth_down'] = (fbx_connection_status_details.get('bandwidth_down',0)/1000000)
         # unite : Mb
-        status_counts['bandwidth_up'] = (fbx_connection_status_details['bandwidth_up']/1000000)
+        status_counts['bandwidth_up'] = (fbx_connection_status_details.get('bandwidth_up',0)/1000000)
         
         status_counts['down_attn'] = (fbx_connection_xdsl_details['down']['attn_10']/10)
         status_counts['up_attn'] = (fbx_connection_xdsl_details['up']['attn_10']/10)
@@ -124,7 +124,7 @@ class myFreeBox(Entity):
         status_counts['protocol'] = fbx_connection_xdsl_details['status']['protocol']
         status_counts['uptime'] = fbx_connection_xdsl_details['status']['uptime']
         
-        status_counts['state'] = fbx_connection_status_details['state']
+        status_counts['state'] = fbx_connection_status_details.get('state',"")
 
         self._attributes = {ATTR_ATTRIBUTION: ""}
         self._attributes.update(status_counts)
@@ -205,7 +205,7 @@ class myFreeBoxPlayer(Entity):
             else:
                 status_counts["out"] = "%s ???"%(quelPackage)
         except:
-            myfbx_player_status_details = "eteinte"
+            myfbx_player_status_details = {"power_state": "eteinte"}
             pass
         status_counts["info"] = "%s"%(myfbx_player_status_details)
 

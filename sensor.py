@@ -202,11 +202,16 @@ class myFreeBoxPlayer(Entity):
                 status_counts["out"] = "mediaplayer"
             elif (quelPackage == "fr.freebox.vodlauncher"):
                 status_counts["out"] = "vodlaucher"
+            elif (quelPackage == "com.youtube.tv"):
+                status_counts["out"] = "youtube"
+            elif (quelPackage == "fr.freebox.home"):
+                status_counts["out"] = "home"
             else:
                 status_counts["out"] = "%s ???"%(quelPackage)
         except:
             myfbx_player_status_details = {"power_state": "eteinte"}
             pass
+
         status_counts["info"] = "%s"%(myfbx_player_status_details)
 
         self._attributes = {ATTR_ATTRIBUTION: ""}

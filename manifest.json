@@ -3,7 +3,7 @@
     "name": "myFreeboxPlayer sensor",
     "documentation": "https://github.com/saniho/apiFreeBox/",
     "config_flow": false,
-    "version": "v1.0.0.3RC",
+    "version": "v1.0.0.3RC2",
     "requirements": [
     ],
     "dependencies": [],

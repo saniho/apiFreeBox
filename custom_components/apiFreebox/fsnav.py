@@ -1,4 +1,4 @@
-import fs
+from . import fs
 import logging
 import os
 

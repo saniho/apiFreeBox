@@ -14,7 +14,7 @@ exemple de configuration sensors.yaml
   scan_interval: 30
 ```
 
-premiere demarrage : valider l'acces de l'applicatino à votre freebox via la fleche droite sur le serveur
+premiere demarrage : valider l'acces de l'application à votre freebox via la fleche droite sur le serveur
 
 valider ensuite dans l'interface du serveur, l'acces au free player
 

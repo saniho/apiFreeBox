@@ -184,6 +184,7 @@ class myFreeBoxPlayer(Entity):
             quelPackage = myfbx_player_status_details["foreground_app"]["package"]
             status_counts["package"] = quelPackage
             status_counts["package_id"] = myfbx_player_status_details["foreground_app"]["package_id"]
+            status_counts["channel"] = ""
             if ( quelPackage == "fr.freebox.tv"):
                 quoiRegarde = myfbx_player_status_details["foreground_app"]["cur_url"]
                 parsed = urlparse.urlparse(quoiRegarde)
@@ -204,6 +205,7 @@ class myFreeBoxPlayer(Entity):
                 status_counts["out"] = "vodlaucher"
             elif (quelPackage == "com.youtube.tv"):
                 status_counts["out"] = "youtube"
+                status_counts["channel"] = "youtube"
             elif (quelPackage == "fr.freebox.home"):
                 status_counts["out"] = "home"
             else:

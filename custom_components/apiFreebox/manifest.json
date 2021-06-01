@@ -3,7 +3,7 @@
     "name": "apiFreebox sensor",
     "documentation": "https://github.com/saniho/apiFreeBox/",
     "config_flow": false,
-    "version": "1.0.0.5",
+    "version": "1.0.0.6",
     "requirements": [
     ],
     "dependencies": [],

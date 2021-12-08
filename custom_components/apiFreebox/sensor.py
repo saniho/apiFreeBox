@@ -199,10 +199,20 @@ class myFreeBoxPlayer(Entity):
                         status_counts["bouquetName"] = parse_qs(parsed.query)["bouquetName"][0]
                     except:
                         pass
+                if ( status_counts["out"] == "" ):
+                    channel = myfbx_player_status_details["foreground_app"]["context"]["channel"]
+                    status_counts["channel"] = channel["channelNumber"]
+                    status_counts["out"] = "tv" # on force
             elif (quelPackage == "fr.freebox.mediaplayer"):
                 status_counts["out"] = "mediaplayer"
             elif (quelPackage == "fr.freebox.vodlauncher"):
                 status_counts["out"] = "vodlaucher"
+            elif (quelPackage == "com.disneyplus"):
+                status_counts["out"] = "Disney +"
+                status_counts["channel"] = "Disney +"
+            elif (quelPackage == "com.netflix"):
+                status_counts["out"] = "Netflix"
+                status_counts["channel"] = "Netflix"
             elif (quelPackage == "com.youtube.tv"):
                 status_counts["out"] = "youtube"
                 status_counts["channel"] = "youtube"

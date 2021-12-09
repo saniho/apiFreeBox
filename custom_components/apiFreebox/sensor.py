@@ -202,6 +202,7 @@ class myFreeBoxPlayer(Entity):
                 if ( status_counts["out"] == "" ):
                     channel = myfbx_player_status_details["foreground_app"]["context"]["channel"]
                     status_counts["channel"] = channel["channelNumber"]
+                    status_counts["channelName"] = channel["channelName"]
                     status_counts["out"] = "tv" # on force
             elif (quelPackage == "fr.freebox.mediaplayer"):
                 status_counts["out"] = "mediaplayer"

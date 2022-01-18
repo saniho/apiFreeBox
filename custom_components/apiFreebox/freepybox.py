@@ -188,6 +188,7 @@ class freepybox:
         data = json.dumps(app_desc)
         print(url)
         r = self.session.post(url, data, timeout=timeout)
+        print(r)
         resp = r.json()
 
         # raise exception if resp.success != True

@@ -184,6 +184,7 @@ class myFreeBoxPlayer(Entity):
             quelPackage = myfbx_player_status_details["foreground_app"]["package"]
             status_counts["package"] = quelPackage
             status_counts["package_id"] = myfbx_player_status_details["foreground_app"]["package_id"]
+            status_counts["channel"] = ""
             if ( quelPackage == "fr.freebox.tv"):
                 quoiRegarde = myfbx_player_status_details["foreground_app"]["cur_url"]
                 parsed = urlparse.urlparse(quoiRegarde)
@@ -198,12 +199,24 @@ class myFreeBoxPlayer(Entity):
                         status_counts["bouquetName"] = parse_qs(parsed.query)["bouquetName"][0]
                     except:
                         pass
+                if ( status_counts["out"] == "" ):
+                    channel = myfbx_player_status_details["foreground_app"]["context"]["channel"]
+                    status_counts["channel"] = channel["channelNumber"]
+                    status_counts["channelName"] = channel["channelName"]
+                    status_counts["out"] = "tv" # on force
             elif (quelPackage == "fr.freebox.mediaplayer"):
                 status_counts["out"] = "mediaplayer"
             elif (quelPackage == "fr.freebox.vodlauncher"):
                 status_counts["out"] = "vodlaucher"
+            elif (quelPackage == "com.disneyplus"):
+                status_counts["out"] = "Disney +"
+                status_counts["channel"] = "Disney +"
+            elif (quelPackage == "com.netflix"):
+                status_counts["out"] = "Netflix"
+                status_counts["channel"] = "Netflix"
             elif (quelPackage == "com.youtube.tv"):
                 status_counts["out"] = "youtube"
+                status_counts["channel"] = "youtube"
             elif (quelPackage == "fr.freebox.home"):
                 status_counts["out"] = "home"
             else:

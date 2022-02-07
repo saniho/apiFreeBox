@@ -216,7 +216,6 @@ class myFreeBoxPlayer(Entity):
                 status_counts["out"] = "Disney +"
                 status_counts["channel"] = "Disney +"
                 status_counts["channelName"] = "Disney +"
-                self._state = "Disney +"
             elif (quelPackage == "com.netflix"):
                 status_counts["out"] = "Netflix"
                 status_counts["channel"] = "Netflix"

@@ -206,19 +206,32 @@ class myFreeBoxPlayer(Entity):
                     status_counts["out"] = "tv" # on force
             elif (quelPackage == "fr.freebox.mediaplayer"):
                 status_counts["out"] = "mediaplayer"
+                status_counts["channel"] = "mediaplayer"
+                status_counts["channelName"] = "mediaplayer"
             elif (quelPackage == "fr.freebox.vodlauncher"):
                 status_counts["out"] = "vodlaucher"
+                status_counts["channel"] = "vodlaucher"
+                status_counts["channelName"] = "vodlaucher"
             elif (quelPackage == "com.disneyplus"):
                 status_counts["out"] = "Disney +"
                 status_counts["channel"] = "Disney +"
+                status_counts["channelName"] = "Disney +"
             elif (quelPackage == "com.netflix"):
                 status_counts["out"] = "Netflix"
                 status_counts["channel"] = "Netflix"
+                status_counts["channelName"] = "Netflix"
             elif (quelPackage == "com.youtube.tv"):
                 status_counts["out"] = "youtube"
                 status_counts["channel"] = "youtube"
+                status_counts["channelName"] = "youtube"
+            elif (quelPackage == "com.primevideo"):
+                status_counts["out"] = "Prime"
+                status_counts["channel"] = "Prime"
+                status_counts["channelName"] = "Prime"
             elif (quelPackage == "fr.freebox.home"):
                 status_counts["out"] = "home"
+                status_counts["channel"] = "home"
+                status_counts["channelName"] = "home"
             else:
                 status_counts["out"] = "%s ???"%(quelPackage)
         except:

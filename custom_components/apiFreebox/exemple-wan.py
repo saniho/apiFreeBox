@@ -4,14 +4,32 @@
 '''
 This example can be run safely as it won't change anything in your box configuration
 '''
+import os
 
-
-try: 
+try:
    from . import freepybox
 except:
    import freepybox
 # Instantiate Freepybox class using default application descriptor 
 # and default token_file location
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+dir_path = dir_path.replace("apiFreebox", "archive")
+try:
+	path = "%s" % (dir_path)
+	if not os.path.isdir(path):
+		os.mkdir(path)
+except:
+	pass
+try:
+	path = "%s/apiFreebox" % (dir_path)
+	if not os.path.isdir(path):
+		os.mkdir(path)
+except:
+	pass
+print( path )
+token_file=f"{path}/app_auth"
+print(token_file)
 fbx = freepybox.freepybox()
 
 # Connect to the freebox with default http protocol

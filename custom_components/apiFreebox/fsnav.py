@@ -1,4 +1,7 @@
-from . import fs
+try:
+    from . import fs
+except:
+    import fs
 import logging
 import os
 

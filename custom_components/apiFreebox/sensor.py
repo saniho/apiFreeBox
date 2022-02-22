@@ -51,6 +51,24 @@ except ImportError:
     )
     import freepybox
 
+def manageDirectory():
+    import os
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    dir_path = dir_path.replace("apiFreebox", "archive")
+    try:
+        path = "%s" % (dir_path)
+        if not os.path.isdir(path):
+            os.mkdir(path)
+    except:
+        pass
+    try:
+        path = "%s/apiFreebox" % (dir_path)
+        if not os.path.isdir(path):
+            os.mkdir(path)
+    except:
+        pass
+    token_file = f"{path}/app_auth"
+    return token_file
 
 def setup_platform(hass, config, add_entities, discovery_info=None):
     """Set up the platform."""
@@ -64,7 +82,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     except :
         _LOGGER.exception("Could not run my First Extension")
         return False
-    fbx = freepybox.freepybox()
+    fbx = freepybox.freepybox( token_file = manageDirectory() )
     _LOGGER.info("host %s" %(host))
     fbx.open(host, 80)
     fbxlstPlayer = fbx.freeplayer.get_freeplayer_list()
@@ -104,7 +122,7 @@ class myFreeBox(Entity):
     def _update(self):
         """Update device state."""
         status_counts = defaultdict(int)
-        fbx = freepybox.freepybox()
+        fbx = freepybox.freepybox( token_file = manageDirectory() )
         fbx.open(self._host, 80)
         fbx_connection_status_details = fbx.connection.get_status_details()
         fbx_connection_xdsl_details = fbx.connection.get_xdsl_stats()
@@ -172,7 +190,7 @@ class myFreeBoxPlayer(Entity):
         """Update device state."""
         status_counts = defaultdict(int)
 
-        fbx = freepybox.freepybox()
+        fbx = freepybox.freepybox( token_file = manageDirectory() )
         #_LOGGER.exception("host  update %s" %(self._host))
         status_counts["version"] = __VERSION__
         status_counts["lastSynchro"] = datetime.datetime.now()

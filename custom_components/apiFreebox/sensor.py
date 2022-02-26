@@ -13,6 +13,7 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.const import (
     CONF_HOST,
+    CONF_PORT,
     CONF_NAME,
     CONF_SCAN_INTERVAL,
     ATTR_ATTRIBUTION,
@@ -34,6 +35,7 @@ SCAN_INTERVAL = timedelta(seconds=1800)
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_HOST): cv.string,
+        vol.Optional(CONF_PORT): cv.positive_int,
         vol.Optional(CONF_NAME): cv.string,
     }
 )
@@ -76,6 +78,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     update_interval = config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL)
 
     host = config.get(CONF_HOST)
+    port = config.get(CONF_PORT, 80)
 
     try:
         session = []
@@ -84,22 +87,23 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
         return False
     fbx = freepybox.freepybox( token_file = manageDirectory() )
     _LOGGER.info("host %s" %(host))
-    fbx.open(host, 80)
+    fbx.open(host, port)
     fbxlstPlayer = fbx.freeplayer.get_freeplayer_list()
     fbx.close()
-    add_entities([myFreeBox(session, name, update_interval, host )], True)
+    add_entities([myFreeBox(session, name, update_interval, host, port)], True)
     for monPlayer in fbxlstPlayer:
-        add_entities([myFreeBoxPlayer(session, name, update_interval, host, monPlayer["id"] )], True)
+        add_entities([myFreeBoxPlayer(session, name, update_interval, host, port, monPlayer["id"] )], True)
     # on va gerer  un element par heure ... maintenant
 
 class myFreeBox(Entity):
     """."""
 
-    def __init__(self, session, name, interval, host):
+    def __init__(self, session, name, interval, host, port):
         """Initialize the sensor."""
         self._session = session
         self._name = name
         self._host = host
+        self._port = port
         self._attributes = None
         self._state = None
         self.update = Throttle(interval)(self._update)
@@ -123,7 +127,7 @@ class myFreeBox(Entity):
         """Update device state."""
         status_counts = defaultdict(int)
         fbx = freepybox.freepybox( token_file = manageDirectory() )
-        fbx.open(self._host, 80)
+        fbx.open(self._host, self._port)
         fbx_connection_status_details = fbx.connection.get_status_details()
         fbx_connection_xdsl_details = fbx.connection.get_xdsl_stats()
         fbx.close()
@@ -161,11 +165,12 @@ class myFreeBox(Entity):
 class myFreeBoxPlayer(Entity):
     """."""
 
-    def __init__(self, session, name, interval, host, id):
+    def __init__(self, session, name, interval, host, port, id):
         """Initialize the sensor."""
         self._session = session
         self._name = name
         self._host = host
+        self._port = port
         self._id = id
         self._attributes = None
         self._state = None
@@ -195,7 +200,7 @@ class myFreeBoxPlayer(Entity):
         status_counts["version"] = __VERSION__
         status_counts["lastSynchro"] = datetime.datetime.now()
         try:
-            fbx.open(self._host, 80)
+            fbx.open(self._host, self._port)
             myfbx_player_status_details = fbx.freeplayer.get_freeplayer(self._id)
             fbx.close()
             status_counts["power_stat"] = myfbx_player_status_details["power_state"]

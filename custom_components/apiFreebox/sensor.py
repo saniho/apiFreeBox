@@ -91,7 +91,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     fbxlstPlayer = fbx.freeplayer.get_freeplayer_list()
     fbx.close()
     add_entities([myFreeBox(session, name, update_interval, host, port)], True)
-    for monPlayer in fbxlstPlayer:
+    for monPlayer in fbxlstPlayer or []:
         add_entities([myFreeBoxPlayer(session, name, update_interval, host, port, monPlayer["id"] )], True)
     # on va gerer  un element par heure ... maintenant
 

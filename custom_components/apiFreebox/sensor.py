@@ -109,6 +109,11 @@ class myFreeBox(Entity):
         self.update = Throttle(interval)(self._update)
 
     @property
+    def unique_id(self):
+        "Return a unique_id for this entity."
+        return "myFreeBox"
+
+    @property
     def name(self):
         """Return the name of the sensor."""
         return "myFreeBox"
@@ -154,7 +159,7 @@ class myFreeBox(Entity):
         self._state = fbx_connection_status_details['state']
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return self._attributes
 
@@ -175,6 +180,11 @@ class myFreeBoxPlayer(Entity):
         self._attributes = None
         self._state = None
         self.update = Throttle(interval)(self._update)
+
+    @property
+    def unique_id(self):
+        "Return a unique_id for this entity."
+        return "myFreeBoxPlayer.%s" %(self._id )
 
     @property
     def name(self):
@@ -269,7 +279,7 @@ class myFreeBoxPlayer(Entity):
         self._state = myfbx_player_status_details["power_state"]
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return self._attributes
 

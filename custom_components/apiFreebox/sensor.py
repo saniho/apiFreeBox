@@ -273,6 +273,8 @@ class myFreeBoxPlayer(Entity):
                     chaine = "Apple TV"
                 elif (quelPackage == "fr.freebox.nucleus"):
                     chaine = "Oqee Ciné"
+                elif (quelPackage == "fr.max.play"):
+                    chaine = "Max"
                 else:
                     chaine = "%s ???"%(quelPackage)
                 status_counts["out"] = chaine

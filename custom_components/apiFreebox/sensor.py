@@ -273,7 +273,7 @@ class myFreeBoxPlayer(Entity):
                     chaine = "Apple TV"
                 elif (quelPackage == "fr.freebox.nucleus"):
                     chaine = "Oqee Ciné"
-                elif (quelPackage == "fr.max.play"):
+                elif (quelPackage == "com.max.play"):
                     chaine = "Max"
                 else:
                     chaine = "%s ???"%(quelPackage)

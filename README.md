@@ -1,5 +1,6 @@
 freebox for HA
 ==============
+Fork du travail de saniho qui n'a plus l'air maintenu (https://github.com/saniho/apiFreeBox).
 
 management simple de votre freebox et des freeplayer
 

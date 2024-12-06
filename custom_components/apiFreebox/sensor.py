@@ -237,40 +237,52 @@ class myFreeBoxPlayer(Entity):
                     status_counts["channel"] = channel["channelNumber"]
                     status_counts["channelName"] = channel["channelName"]
                     status_counts["out"] = "tv" # on force
-            elif (quelPackage == "fr.freebox.mediaplayer"):
-                status_counts["out"] = "mediaplayer"
-                status_counts["channel"] = "mediaplayer"
-                status_counts["channelName"] = "mediaplayer"
-            elif (quelPackage == "fr.freebox.vodlauncher"):
-                status_counts["out"] = "vodlaucher"
-                status_counts["channel"] = "vodlaucher"
-                status_counts["channelName"] = "vodlaucher"
-            elif (quelPackage == "com.disneyplus"):
-                status_counts["out"] = "Disney +"
-                status_counts["channel"] = "Disney +"
-                status_counts["channelName"] = "Disney +"
-            elif (quelPackage == "com.netflix"):
-                status_counts["out"] = "Netflix"
-                status_counts["channel"] = "Netflix"
-                status_counts["channelName"] = "Netflix"
-            elif (quelPackage == "com.youtube.tv"):
-                status_counts["out"] = "youtube"
-                status_counts["channel"] = "youtube"
-                status_counts["channelName"] = "youtube"
-            elif (quelPackage == "com.primevideo"):
-                status_counts["out"] = "Prime"
-                status_counts["channel"] = "Prime"
-                status_counts["channelName"] = "Prime"
-            elif (quelPackage == "fr.freebox.home"):
-                status_counts["out"] = "home"
-                status_counts["channel"] = "home"
-                status_counts["channelName"] = "home"
-            else:
-                status_counts["out"] = "%s ???"%(quelPackage)
+            elif ( quelPackage == "fr.freebox.radio"):
+                channel = myfbx_player_status_details["foreground_app"]["context"]["radio"]["currentRadio"]
+                status_counts["channel"] = channel["name"]
+                status_counts["channelName"] = channel["name"]
+                status_counts["out"] = "Radio" # on force
+            else: 
+                if (quelPackage == "fr.freebox.mediaplayer"):
+                    chaine = "mediaplayer"
+                elif (quelPackage == "fr.freebox.vodlauncher"):
+                    chaine = "vodlaucher"
+                elif (quelPackage == "com.disneyplus"):
+                    chaine = "Disney +"
+                elif (quelPackage == "com.netflix"):
+                    chaine = "Netflix"
+                elif (quelPackage == "com.youtube.tv"):
+                    chaine = "Youtube"
+                elif (quelPackage == "com.primevideo"):
+                    chaine = "Prime"
+                elif (quelPackage == "fr.freebox.home"):
+                    chaine = "Home"
+                elif (quelPackage == "fr.freebox.overlayhome"):
+                    chaine = "Home"
+                elif (quelPackage == "fr.freebox.replay"):
+                    chaine = "Replay"
+                elif (quelPackage == "fr.freebox.filebrowser"):
+                    chaine = "Mes Fichiers"
+                elif (quelPackage == "fr.freebox.ligue1"):
+                    chaine = "Free Ligue 1"
+                elif (quelPackage == "fr.freebox.domotique"):
+                    chaine = "Camera"
+                elif (quelPackage == "fr.freebox.downloader"):
+                    chaine = "Téléchargements"
+                elif (quelPackage == "com.apple.tv"):
+                    chaine = "Apple TV"
+                elif (quelPackage == "fr.freebox.nucleus"):
+                    chaine = "Oqee Ciné"
+                elif (quelPackage == "com.max.play"):
+                    chaine = "Max"
+                else:
+                    chaine = "%s ???"%(quelPackage)
+                status_counts["out"] = chaine
+                status_counts["channel"] = chaine
+                status_counts["channelName"] = chaine
         except:
             myfbx_player_status_details = {"power_state": "eteinte"}
             pass
-
         status_counts["info"] = "%s"%(myfbx_player_status_details)
 
         self._attributes = {ATTR_ATTRIBUTION: ""}

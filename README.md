@@ -5,7 +5,7 @@ management simple de votre freebox et des freeplayer
 
 vous pourrez ainsi savoir si votre freeplyer est allumé et sur quelle chaine.
 
-exemple de configuration sensors.yaml
+exemple de configuration sensors.yaml et/ou binary_sensor.yaml
 
 ```
 # freebox

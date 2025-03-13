@@ -3,7 +3,7 @@ freebox for HA
 
 management simple de votre freebox et des freeplayer
 
-vous pourrez ainsi savoir si votre freeplyer est allumé et sur quelle chaine.
+vous pourrez ainsi savoir si votre freeplayer est allumé et sur quelle chaine.
 
 exemple de configuration sensors.yaml et/ou binary_sensor.yaml
 
